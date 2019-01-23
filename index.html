@@ -1,0 +1,112 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@_unwriter" />
+<meta name="twitter:title" content="Alice in BitcoinLand" />
+<meta name="twitter:description" content="A Serverless Website Stored in a Single Bitcoin SV Transaction" />
+<meta name="twitter:image" content="https://alice.bitdb.network/alice.jpg" />
+<meta property="og:url" content="https://alice.bitdb.network" />
+<meta property="og:type"   content="website" />
+<meta property="og:title" content="Alice in BitcoinLand" />
+<meta property="og:description" content="A Serverless Website Stored in a Single Bitcoin SV Transaction" />
+<meta property="og:image" content="https://alice.bitdb.network/alice.jpg" />
+<style>
+body {
+  padding: 50px;
+  margin: 0;
+  margin: 0 auto;
+  width: 600px;
+  max-width: 100%;
+}
+img {
+  width: 500px;
+  max-width: 100%;
+}
+h1 {
+  font-family: Georgia;
+  font-style: italic;
+  font-size: 50px;
+  letter-spacing: -1px;
+}
+.sub {
+  font-style: italic;
+  font-weight: bold;
+}
+hr {
+  width: 100%;
+  margin: 30px 0;
+  overflow: visible;
+  padding: 0;
+  border: none;
+  border-top: medium double #333;
+  color: #333;
+  text-align: center;
+}
+hr:after {
+  display: inline-block;
+  position: relative;
+  top: -0.7em;
+  font-size: 1.5em;
+  padding: 0 0.25em;
+  background: white;
+}
+pre {
+ white-space: pre-wrap;
+ white-space: -moz-pre-wrap;
+ white-space: -pre-wrap;
+ white-space: -o-pre-wrap;
+ word-wrap: break-word;
+}
+a {
+  color: red;
+}
+a.l {
+  display: block;
+  padding: 10px 0;
+  color: gray;
+}
+</style>
+</head>
+<body>
+<script>
+var query = {
+  "v": 3,
+  "q": {
+    "find": {
+      "tx.h": "b742886801560f57b4dc824ce3a1719613d8b2d38530909fe988c1ca04cc82af"
+    },
+    "limit": 1
+  }
+}
+var b64 = btoa(JSON.stringify(query));
+var url = "https://babel.bitdb.network/q/1DHDifPvtPgKFPZMRSxmVHhiPvFmxZwbfh/" + b64
+
+var header = {
+  headers: { key: "1MEjsi12X32jv8skdTXQTnYiYAKGrGDcq9" }
+};
+
+fetch(url, header).then(function(r) {
+  return r.json()
+}).then(function(r) {
+  var o = r.c[0].out[1]
+  var keys = Object.keys(o).filter(function(key) {
+    return /ls[0-9]+/.test(key)
+  })
+  var lines = ""
+  keys.sort().forEach(function(key) {
+    lines += o[key]
+  })
+  document.querySelector("#content").innerHTML = lines
+})
+</script>
+<img src="./alice.jpg">
+<h1>Alice in BitcoinLand</h1>
+<div class="sub">A Serverless Website <a href="https://blockchair.com/bitcoin-sv/transaction/b742886801560f57b4dc824ce3a1719613d8b2d38530909fe988c1ca04cc82af">Stored in a Single Bitcoin SV Transaction</a></div>
+<a class='l' href='https://bitdb.network'>Powered by Bitdb</a>
+<hr>
+<pre id='content'>
+</pre>
+<hr>
+</body>
+</html>
