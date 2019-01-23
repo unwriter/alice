@@ -94,7 +94,10 @@ fetch(url, header).then(function(r) {
     return /ls[0-9]+/.test(key)
   })
   var lines = ""
-  keys.sort().forEach(function(key) {
+  keys.sort(function(a, b) {
+    return parseInt(a.slice(2)) - parseInt(b.slice(2))
+  }).forEach(function(key) {
+    console.log("key = ", key)
     lines += o[key]
   })
   document.querySelector("#content").innerHTML = lines
